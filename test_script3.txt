@@ -1,0 +1,7 @@
+ls
+cd /usr/bin
+ls -la
+cd ..
+pwd_should_fail
+ls
+exit

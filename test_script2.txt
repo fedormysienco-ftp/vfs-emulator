@@ -1,0 +1,6 @@
+ls
+unknown_command_should_be_skipped
+cd /var
+ls -l
+another_invalid_command
+# exit - ЗАКОММЕНТИРОВАЛ
