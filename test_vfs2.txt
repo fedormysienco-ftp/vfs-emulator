@@ -1,0 +1,7 @@
+mount vfs_medium.json
+ls
+cd home/user
+ls
+cat file1.txt
+cd /etc
+ls

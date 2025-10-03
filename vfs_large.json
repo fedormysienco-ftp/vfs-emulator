@@ -1,0 +1,21 @@
+{
+  "type": "directory", 
+  "contents": {
+    "level1": {
+      "type": "directory",
+      "contents": {
+        "level2": {
+          "type": "directory", 
+          "contents": {
+            "level3": {
+              "type": "directory",
+              "contents": {
+                "deep_file.txt": {"type": "file", "content": "Deep content"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

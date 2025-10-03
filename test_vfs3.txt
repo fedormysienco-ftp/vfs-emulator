@@ -1,0 +1,6 @@
+mount vfs_large.json  
+ls
+cd level1/level2/level3
+ls
+pwd
+cd /

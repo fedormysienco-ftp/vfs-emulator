@@ -1,0 +1,24 @@
+{
+  "type": "directory",
+  "contents": {
+    "home": {
+      "type": "directory", 
+      "contents": {
+        "user": {
+          "type": "directory",
+          "contents": {
+            "file1.txt": {"type": "file", "content": "Content 1"},
+            "file2.txt": {"type": "file", "content": "Content 2"},
+            "file3.txt": {"type": "file", "content": "Content 3"}
+          }
+        }
+      }
+    },
+    "etc": {
+      "type": "directory",
+      "contents": {
+        "config.conf": {"type": "file", "content": "config data"}
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+mount vfs_minimal.json
+ls
+cd home
+ls
+cd ..
+# exit

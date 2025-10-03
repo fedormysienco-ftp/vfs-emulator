@@ -1,0 +1,48 @@
+# === Комплексный тест всех команд VFS эмулятора ===
+
+# 1. Тест загрузки VFS
+echo "=== Testing VFS loading ==="
+mount vfs_minimal.json
+ls
+pwd
+
+# 2. Тест навигации
+echo "=== Testing navigation ==="
+cd home
+ls
+cd user
+pwd
+cd /
+ls
+
+# 3. Тест разных VFS
+echo "=== Testing medium VFS ==="
+mount vfs_medium.json
+ls
+cd home/user
+ls
+cat file1.txt
+cd /etc
+ls
+
+# 4. Тест глубокой навигации
+echo "=== Testing deep navigation ==="
+mount vfs_large.json
+ls
+cd level1/level2/level3
+pwd
+ls
+cd /
+
+# 5. Тест обработки ошибок
+echo "=== Testing error handling ==="
+mount nonexistent.json
+cd invalid_directory
+cat unknown_file.txt
+cd /nonexistent/path
+
+# 6. Возврат к рабочей VFS
+echo "=== Returning to working state ==="
+mount vfs_minimal.json
+ls
+echo "=== Test completed ==="
