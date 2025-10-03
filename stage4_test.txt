@@ -1,0 +1,27 @@
+# === Stage 4: Testing New Commands ===
+
+# Test uname command
+uname
+uname -a
+
+# Test clear command (will clear screen)
+clear
+
+# Test all VFS commands with new additions
+mount vfs_medium.json
+ls
+cd home/user
+pwd
+cat file1.txt
+ls -l
+
+# Test error handling
+cat nonexistent.txt
+cd invalid_dir
+
+# Test navigation
+cd /
+ls
+uname
+
+echo "=== Stage 4 Test Completed ==="

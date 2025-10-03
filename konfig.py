@@ -204,6 +204,8 @@ class VFSEmulator(tk.Tk):
             "mount": self.cmd_mount,
             "pwd": self.cmd_pwd,
             "cat": self.cmd_cat,
+            "uname": self.cmd_uname,
+            "clear": self.cmd_clear,
         }
 
     def execute_command(self, event):
@@ -258,7 +260,20 @@ class VFSEmulator(tk.Tk):
                 self.print_error(f"cat: {filename}: Is a directory")
         else:
             self.print_error(f"cat: {filename}: No such file")
-            
+
+    def cmd_clear(self, args):
+        """Очищает экран"""
+        self.output_area.configure(state="normal")
+        self.output_area.delete(1.0, tk.END)
+        self.output_area.configure(state="disabled")
+
+    def cmd_uname(self, args):
+        """Показывает информацию о системе"""
+        if args and args[0] == '-a':
+            self.print_output("VFS-Emulator 1.0 (Stage 4) - Virtual File System Emulator")
+        else:
+            self.print_output("VFS-Emulator")
+
     def cmd_mount(self, args):
         """Команда mount для загрузки VFS"""
         if not args:
