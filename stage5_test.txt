@@ -1,0 +1,27 @@
+# === Stage 5: Testing chmod command ===
+
+# Mount VFS and list contents
+mount vfs_medium.json
+ls -l
+
+# Test chmod command
+chmod 755 file1.txt
+chmod 644 file2.txt
+chmod 700 file3.txt
+
+# Verify changes with ls -l
+ls -l
+
+# Test error handling
+chmod 755 nonexistent.txt
+chmod invalid file1.txt
+chmod 888 file1.txt  # invalid mode
+chmod 755
+
+# Test on directories
+cd /etc
+ls -l
+chmod 755 config.conf
+ls -l
+
+echo "=== Stage 5 Test Completed ==="

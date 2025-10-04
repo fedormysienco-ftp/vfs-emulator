@@ -206,6 +206,7 @@ class VFSEmulator(tk.Tk):
             "cat": self.cmd_cat,
             "uname": self.cmd_uname,
             "clear": self.cmd_clear,
+            "chmod": self.cmd_chmod,
         }
 
     def execute_command(self, event):
@@ -261,6 +262,46 @@ class VFSEmulator(tk.Tk):
         else:
             self.print_error(f"cat: {filename}: No such file")
 
+    def cmd_chmod(self, args):
+        """Изменяет права доступа к файлу/директории"""
+        if not self.is_vfs_loaded():
+            self.print_error("No VFS loaded")
+            return
+
+        if len(args) != 2:
+            self.print_error("Usage: chmod <mode> <file>")
+            return
+
+        mode = args[0]
+        filename = args[1]
+        current_node = self.get_current_node()
+
+        # Проверяем существование файла/директории
+        if not current_node or 'contents' not in current_node or filename not in current_node['contents']:
+            self.print_error(f"chmod: {filename}: No such file or directory")
+            return
+
+        target_node = current_node['contents'][filename]
+
+        # Валидация режима (простая проверка)
+        if not self.is_valid_mode(mode):
+            self.print_error(f"chmod: invalid mode: {mode}")
+            return
+
+        # Устанавливаем права
+        target_node['permissions'] = mode
+        self.print_output(f"Changed permissions of '{filename}' to {mode}")
+
+    def is_valid_mode(self, mode):
+        """Проверяет валидность режима прав доступа"""
+        # Простая проверка: должен быть 3-значным числом от 0 до 7
+        if len(mode) != 3:
+            return False
+        for digit in mode:
+            if digit not in '01234567':
+                return False
+        return True
+
     def cmd_clear(self, args):
         """Очищает экран"""
         self.output_area.configure(state="normal")
@@ -308,11 +349,19 @@ class VFSEmulator(tk.Tk):
             if current_node and current_node.get('type') == 'directory' and 'contents' in current_node:
                 items = []
                 for name, child in current_node['contents'].items():
+                    # Получаем тип и права доступа
                     item_type = 'd' if child.get('type') == 'directory' else '-'
-                    items.append(f"{name}/" if item_type == 'd' else name)
+                    permissions = child.get('permissions', '644')  # По умолчанию
+
+                    if args and '-l' in args:
+                        # Детальный вывод с правами
+                        items.append(f"{item_type}{permissions} {name}")
+                    else:
+                        # Обычный вывод
+                        items.append(f"{name}/" if item_type == 'd' else name)
 
                 if items:
-                    self.print_output("  ".join(sorted(items)))
+                    self.print_output("\n".join(sorted(items)))
                 else:
                     self.print_output("Directory is empty")
             else:
@@ -338,7 +387,7 @@ class VFSEmulator(tk.Tk):
         target_dir = args[0]
 
         if self.is_vfs_loaded():
-            # Режим VFS - проверяем существование пути
+
             if target_dir == "/":
                 # Переход в корень
                 self.current_dir = "/"
